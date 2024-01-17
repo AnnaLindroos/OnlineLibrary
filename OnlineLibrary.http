@@ -1,0 +1,132 @@
+@OnlineLibrary_HostAddress = https://localhost:7279
+
+###
+// Add an ISBN to the database. 
+POST {{OnlineLibrary_HostAddress}}/api/isbns/Add-ISBN
+Content-Type: application/json
+
+{
+  "isbnNumber": 9780008453343,
+  "releaseYear": 2021,
+  "title": "Tales from the Perilous Realm"
+}
+
+###
+// Add an author to the database 
+POST {{OnlineLibrary_HostAddress}}/api/authors/Add-Author
+Content-Type: application/json
+
+{
+  "firstName": "J.R.R.",
+  "lastName": "Tolkien",
+  "isbnIds": [
+      8
+  ]
+}
+###
+// Add a copy of a book with the ISBN we added earlier
+POST {{OnlineLibrary_HostAddress}}/api/bookcopies/Add-Book-Copy
+Content-Type: application/json
+
+{
+  "isbnId": 8
+}
+
+###
+// Add a customer (a loan card for the customer is automatically generated)
+POST {{OnlineLibrary_HostAddress}}/api/customers/Add-Customer
+Content-Type: application/json
+
+{
+  "firstName": "Benjamin",
+  "lastName": "Österlund"
+}
+
+###
+// Rent a book
+POST {{OnlineLibrary_HostAddress}}/api/loans/Rent-Book
+Content-Type: application/json
+
+{
+  "bookCopyId": 8,
+  "loanCardId": 2
+}
+
+###
+// Add a rating 
+POST {{OnlineLibrary_HostAddress}}/api/ratings/Add-Rating
+Content-Type: application/json
+
+{
+  "bookRating": 5,
+  "review": "Amazing book!",
+  "customerId": 2,
+  "isbnId": 8
+}
+
+###
+
+// View authors
+GET {{OnlineLibrary_HostAddress}}/api/authors/View-All-Authors
+
+###
+// View customers
+GET {{OnlineLibrary_HostAddress}}/api/customers/View-All-Customers
+
+###
+// View information about all ISBNS (title, releaseyear, available copies)
+GET {{OnlineLibrary_HostAddress}}/api/isbns/View-Information-All-Books
+
+###
+//  View information about all book copies 
+GET {{OnlineLibrary_HostAddress}}/api/bookcopies/View-All-Book-Copies
+
+###
+// View information about a specific ISBN (title, releaseyear, available copies)
+GET {{OnlineLibrary_HostAddress}}/api/isbns/Search-Book-Information-By-Id?id=8
+
+###
+//  View information about a specific book copy 
+GET {{OnlineLibrary_HostAddress}}/api/bookcopies/Search-Book-Copy-By-Id?id=8
+
+###
+// View loan cards
+GET {{OnlineLibrary_HostAddress}}/api/loancards/View-All-Loan-Cards
+
+###
+// View loans
+GET {{OnlineLibrary_HostAddress}}/api/loans/View-All-Loans
+
+###
+// View previous loans
+GET {{OnlineLibrary_HostAddress}}/api/loans/View-Previous-Loans
+
+###
+//View current loans
+GET {{OnlineLibrary_HostAddress}}/api/loans/View-Current-Loans
+
+###
+// View ratings
+GET {{OnlineLibrary_HostAddress}}/api/ratings/View-All-Ratings
+
+###
+// Return the book we rented
+PUT {{OnlineLibrary_HostAddress}}/api/loans/Return-Book-By-Loan-Id?id=2
+
+###
+// Delete the customer
+DELETE {{OnlineLibrary_HostAddress}}/api/customers/Delete-Customer-By-Id?id=2
+
+###
+// Delete the book copy
+DELETE {{OnlineLibrary_HostAddress}}/api/bookcopies/Delete-Book-Copy-By-Id?id=8
+
+###
+// Delete the ISBN 
+DELETE {{OnlineLibrary_HostAddress}}/api/isbns/Delete-ISBN-By-Id?id=8
+
+###
+// Delete the author
+DELETE {{OnlineLibrary_HostAddress}}/api/authors/Delete-Author-By-Id?id=8
+
+###
